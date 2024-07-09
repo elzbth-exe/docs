@@ -3,10 +3,9 @@
 ![Kube-OVN](static/kube-ovn-horizontal-color.svg){: style="width:40%"}
 
 Kube-OVN, a CNCF Sandbox Project, bridges the SDN into Cloud Native.
-It offers an advanced Container Network Fabric for Enterprises with the most functions,
-extreme performance and the easiest operation.
+It offers a modular, high performance Container Network Fabric for Enterprises with multiple functionalities while staying easy to operate.
 
-**Most Functions:**
+**Multiple Functionalities:**
 
 If you miss the rich networking capabilities of the SDN age but are struggling to find them in the cloud-native age,
 Kube-OVN should be your best choice.
@@ -19,7 +18,7 @@ It currently supports [Subnet Management](guide/subnet.en.md), [Static IP Alloca
 [Multi-NIC Management](advance/multi-nic.en.md), [ACL](guide/subnet.en.md#subnet-acl), [Traffic Mirroring](guide/mirror.en.md),
 ARM Support, [Windows Support](advance/windows.en.md), and many more.
 
-**Extreme Performance:**
+**High Performance:**
 
 If you're concerned about the additional performance loss associated with container networks,
 then take a look at [How Kube-OVN is doing everything it can to optimize performance](advance/performance-tuning.en.md).
@@ -34,14 +33,14 @@ through the tailoring of OVN upstream flow tables and the use and tuning of vari
 In addition, Kube-OVN is continuously optimizing the usage of resources such as CPU and memory
 to accommodate resource-limited scenarios such as the edge.
 
-**Easiest Operation:**
+**Easy Operations:**
 
 If you're worried about container network operations, Kube-OVN has a number of
 built-in tools to help you simplify your operations.
 
 Kube-OVN provides [one-click installation scripts](start/one-step-install.en.md) to help users quickly build production-ready container networks.
-Also built-in rich [monitoring metrics](reference/metrics.en.md) and [Grafana dashboard](guide/prometheus-grafana.en.md) help users to quickly set up monitoring system.
+Also built-in rich [monitoring metrics](reference/metrics.en.md) and [Grafana dashboards](guide/prometheus-grafana.en.md) help users to quickly set up monitoring system.
 
 Powerful [command line tools](ops/kubectl-ko.en.md) simplify daily operations and maintenance for users.
-By combining [with Cilium](advance/with-cilium.en.md), users can enhance the observability of their networks with eBPF capabilities.
+By combining [Cilium](advance/with-cilium.en.md), users can enhance the observability of their networks with eBPF capabilities.
 In addition, the ability to [mirror traffic](guide/mirror.en.md) makes it easy to customize traffic monitoring and interface with traditional NPM systems.

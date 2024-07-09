@@ -3,44 +3,44 @@
 Kube-OVN provides a one-click installation script to help you quickly install a highly available,
 production-ready Kube-OVN container network with Overlay networking by default.
 
-Helm Chart installation is supported since Kube-OVN v1.12.0, and the default deployment is Overlay networking.
+A Helm Chart installation is supported since Kube-OVN v1.12.0, and the default deployment mode is Overlay networking.
 
 If you need Underlay/Vlan networking as the default container network，please read [Underlay Installation](./underlay.en.md)
 
-Before installation please read [Prerequisites](./prepare.en.md) first to make sure the environment is ready.
+Before installation please read [the prerequisites](./prepare.en.md) first to make sure the environment is set up.
 
 ## Script Installation
 
 ### Download the installation script
 
-We recommend using the stable release version for production environments, please use the following command to download:
+We recommend using the stable release version for production environments, please use the following command to download it:
 
 ```bash
 wget https://raw.githubusercontent.com/kubeovn/kube-ovn/{{ variables.branch }}/dist/images/install.sh
 ```
 
-If you are interested in the latest features of the master branch, please use the following command to download:
+If you are interested in the latest features of the master branch, use the following command instead:
 
 ```bash
 wget https://raw.githubusercontent.com/kubeovn/kube-ovn/master/dist/images/install.sh
 ```
 
-### Modify Configuration Options
+### Modify The Configuration Options
 
-Open the script using the editor and change the following variables to the expected:
+Open the script using the editor and change the following variables to your desired configuration:
 
 ```bash
 REGISTRY="kubeovn"                     # Image Repo 
-VERSION="{{ variables.version }}"                      # Image Tag
-POD_CIDR="10.16.0.0/16"                # Default subnet CIDR don't overlay with SVC/NODE/JOIN CIDR
-SVC_CIDR="10.96.0.0/12"                # Be consistent with apiserver's service-cluster-ip-range
-JOIN_CIDR="100.64.0.0/16"              # Pod/Host communication Subnet CIDR, don't overlay with SVC/NODE/POD CIDR
+VERSION="{{ variables.version }}"      # Image Tag
+POD_CIDR="10.16.0.0/16"                # The default subnet CIDR must not overlay with SVC/NODE/JOIN CIDR
+SVC_CIDR="10.96.0.0/12"                # Be consistent with the apiserver's service-cluster-ip-range
+JOIN_CIDR="100.64.0.0/16"              # Pod/Host communication Subnet CIDR, must not overlay with SVC/NODE/POD CIDR
 LABEL="node-role.kubernetes.io/master" # The node label to deploy OVN DB
 IFACE=""                               # The name of the host NIC used by the container network, or if empty use the NIC that host Node IP in Kubernetes
 TUNNEL_TYPE="geneve"                   # Tunnel protocol，available options: geneve, vxlan or stt. stt requires compilation of ovs kernel module
 ```
 
-You can also use regular expression to math NIC names，such as `IFACE=enp6s0f0,eth.*`.
+You can also use regular expressions to match NIC names，such as `IFACE=enp6s0f0,eth.*`.
 
 ### Run the Script
 
@@ -50,7 +50,7 @@ Wait Kube-OVN ready.
 
 ## Helm Chart Installation
 
-Since the installation of Kube-OVN requires setting some parameters, to install Kube-OVN using Helm, you need to follow the steps below.
+Since the installation of Kube-OVN requires setting some parameters, to install Kube-OVN using Helm, you need to follow the following steps.
 
 ### View the node IP address
 

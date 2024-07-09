@@ -1,9 +1,9 @@
 # One-Click Deployment of Kubernetes and Kube-OVN with sealos
 
-[sealos](https://github.com/labring/sealos), a distribution of Kubernetes, helps users quickly initialize a container cluster from scratch.
+[Sealos](https://github.com/labring/sealos), a distribution of Kubernetes, helps users quickly initialize a container cluster from scratch.
 By using sealos, users can deploy a Kubernetes cluster with Kube-OVN installed in minutes with a single command.
 
-## Download sealos
+## Install sealos
 
 === ":octicons-file-code-16: AMD64"
 

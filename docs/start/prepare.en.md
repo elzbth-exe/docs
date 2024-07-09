@@ -2,7 +2,7 @@
 
 Kube-OVN is a CNI-compliant network system that depends on the Kubernetes environment and
 the corresponding kernel network module for its operation.
-Below are the operating system and software versions tested,
+Below are the operating systems and software versions tested,
 the environment configuration and the ports that need to be opened.
 
 ## Software Version
@@ -14,17 +14,19 @@ the environment configuration and the ports that need to be opened.
 
 *Attention*：
 
-1. For CentOS kernel version 3.10.0-862 bug exists in `netfilter` modules that lead Kube-OVN embed nat and lb failure.Please update kernel and check [Floating IPs broken after kernel upgrade to Centos/RHEL 7.5 - DNAT not working](https://bugs.launchpad.net/neutron/+bug/1776778){: target="_blank" }.
-2. Kernel version 4.18.0-372.9.1.el8.x86_64 in Rocky Linux 8.6 has a TCP connection problem [TCP connection failed in Rocky Linux 8.6](https://github.com/kubeovn/kube-ovn/issues/1647){: target="_blank" }，please update kernel to 4.18.0-372.13.1.el8_6.x86_64 or later。
-3. For kernel version 4.4, the related `openvswitch` module has some issues for ct，please update kernel version or manually compile `openvswitch` kernel module.
-4. When building Geneve tunnel IPv6 in kernel should be enabled，check the kernel bootstrap options with `cat /proc/cmdline`.Check [Geneve tunnels don't work when ipv6 is disabled](https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1794232){: target="_blank" } for the detail bug info.
+1. For CentOS kernel version 3.10.0-862, a bug exists in the `netfilter` modules that lead Kube-OVN embed nat and lb failure. Please update the kernel and check the following bug info: [Floating IPs broken after kernel upgrade to Centos/RHEL 7.5 - DNAT not working](https://bugs.launchpad.net/neutron/+bug/1776778){: target="_blank" }.
+2. The kernel version 4.18.0-372.9.1.el8.x86_64 in Rocky Linux 8.6 has a TCP connection problem [(TCP connection failed in Rocky Linux 8.6)](https://github.com/kubeovn/kube-ovn/issues/1647){: target="_blank" }，please update the kernel to 4.18.0-372.13.1.el8_6.x86_64 or later。
+3. For kernel version 4.4, the related `openvswitch` module has some issues for ct，please update the kernel version or manually compile the `openvswitch` kernel module.
+4. When building a Geneve tunnel, IPv6 in the kernel should be enabled，check the kernel bootstrap options with `cat /proc/cmdline`.Check [Geneve tunnels don't work when ipv6 is disabled](https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1794232){: target="_blank" } for the detail bug info.
 
 ## Environment Setup
+Make sure:
 
-- Kernel should enable IPv6, if kernel bootstrap options contain `ipv6.disable=1`, it should be set to `0`.
-- `kube-proxy` works, Kube-OVN can visit `kube-apiserver` from Service ClusterIP.
-- Make sure kubelet enabled `CNI` and find cni-bin and cni-conf in default directories, kubelet bootstrap options should contain `--network-plugin=cni --cni-bin-dir=/opt/cni/bin --cni-conf-dir=/etc/cni/net.d`.
-- Make sure no other CNI installed or has been removed，check if any config files still exist in`/etc/cni/net.d/`.
+- IPv6 is enabled, if the kernel bootstrap options contain `ipv6.disable=1`, it should be set to `0`.
+- `kube-proxy` works, Kube-OVN can visit the `kube-apiserver` from the Service ClusterIP.
+- `CNI` is enabled in the kubelet and cni-bin and cni-conf are in their default directories.
+- Kubelet bootstrap options should contain `--network-plugin=cni --cni-bin-dir=/opt/cni/bin --cni-conf-dir=/etc/cni/net.d`.
+- No other CNI is installed or that any preinstalled CNI has been removed. Check if any config files still exist in`/etc/cni/net.d/`.
 
 ## Ports Need Open
 

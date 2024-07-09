@@ -3,7 +3,7 @@
 By default, the default subnet uses Geneve to encapsulate cross-host traffic,
 and build an overlay network on top of the infrastructure.
 
-For the case that you want the container network to use the physical network address directly,
+In the event you want the container network to use the physical network address directly,
 you can set the default subnet of Kube-OVN to work in Underlay mode,
 which can directly assign the address resources in the physical network to the containers,
 achieving better performance and connectivity with the physical network.
@@ -12,7 +12,7 @@ achieving better performance and connectivity with the physical network.
 
 ## Limitation
 
-Since the container network in this mode uses physical network directly for L2 packet forwarding,
+Since the container network in this mode uses the physical network directly for L2 packet forwarding,
 L3 functions such as SNAT/EIP, distributed gateway/centralized gateway in Overlay mode cannot be used.
 VPC level isolation is also not available for underlay subnet.
 
@@ -74,17 +74,17 @@ LS_DNAT_MOD_DL_DST            # If DNAT translate MAC addresses to accelerate se
 bash install.sh
 ```
 
-## Dynamically Create Underlay Networks via CRD
+## Dynamically Create the Underlay Networks via CRD
 
-This approach dynamically creates an Underlay subnet that Pod can use after installation.
+This approach dynamically creates an Underlay subnet that the Pod can use after installation.
 
 ### Create ProviderNetwork
 
-ProviderNetwork provides the abstraction of host NIC to physical network mapping, unifies the management of NICs belonging to the same network,
+The ProviderNetwork provides the abstraction of the host NIC to the physical network mapping, unifies the management of NICs belonging to the same network,
 and solves the configuration problems in complex environments with multiple NICs on the same machine, inconsistent NIC names and
 inconsistent corresponding Underlay networks.
 
-Create ProviderNetwork as below:
+Create the ProviderNetwork as shown below:
 
 ```yml
 apiVersion: kubeovn.io/v1
@@ -104,7 +104,7 @@ spec:
 **Note: The length of the ProviderNetwork resource name must not exceed 12.**
 
 - `defaultInterface`: The default node NIC name. When the ProviderNetwork is successfully created, an OVS bridge named br-net1 (in the format `br-NAME`) is created in each node (except excludeNodes) and the specified node NIC is bridged to this bridge.
-- `customInterfaces`: Optionally, you can specify the NIC to be used for a specific node.
+- `customInterfaces`: Optional, you can specify the NIC to be used for a specific node.
 - `excludeNodes`: Optional, to specify nodes that do not bridge the NIC. Nodes in this list will be added with the `net1.provider-network.ovn.kubernetes.io/exclude=true` tag.
 
 Other nodes will be added with the following tags:
@@ -157,9 +157,9 @@ Simply specify the value of `vlan` as the name of the VLAN to be used. Multiple 
 ## Create Pod
 
 You can create containers in the normal way, check whether the container IP is in the specified range
-and whether the container can interoperate with the physical network.
+and whether the container can be interoperated with the physical network.
 
-For fixed IP requirements, please refer to [Fixed Addresses](../guide/static-ip-mac.en.md)
+For fixed IP requirements, please refer to this guide: [Fixed Addresses](../guide/static-ip-mac.en.md)
 
 ## Logical Gateway
 
@@ -241,7 +241,7 @@ nmcli -t -f GENERAL.STATE device show eth0 | grep -qw unmanaged || nmcli device 
 
 ## Known Issues
 
-### When the physical network is enabled with hairpin, Pod network is abnormal
+### When the physical network is enabled with hairpin, the Pod network's behavior is abnormal
 
 When physical networks enable hairpin or similar behaviors, problems such as gateway check failure when creating Pods and abnormal network communication of Pods may occur. This is because the default MAC learning function of OVS bridge does not support this kind of network environment.
 
@@ -249,7 +249,7 @@ To solve this problem, it is necessary to turn off hairpin (or modify the releva
 
 ### When there are a large number of Pods, gateway check for new Pods fails
 
-If there are a large number of Pods running on the same node (more than 300), it may cause packet loss due to the OVS flow table resubmit times exceeding the upper limit of ARP broadcast packets.
+If there is a large number of Pods running on the same node (more than 300), it may cause packet loss due to the OVS flow table resubmit times exceeding the upper limit of ARP broadcast packets.
 
 ```txt
 2022-11-13T08:43:46.782Z|00222|ofproto_dpif_upcall(handler5)|WARN|Flow: arp,in_port=331,vlan_tci=0x0000,dl_src=00:00:00:25:eb:39,dl_dst=ff:ff:ff:ff:ff:ff,arp_spa=10.213.131.240,arp_tpa=10.213.159.254,arp_op=1,arp_sha=00:00:00:25:eb:39,arp_tha=ff:ff:ff:ff:ff:ff
